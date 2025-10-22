@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOCIAL | oxsh0gunX</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Hacker/Monospace Font --><link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Load Font Awesome Icons (v6.5.2) for Social Media Logos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJvJtP5uJkSgS/9vH+L8c5h1FzM7j5E8p7G0/6G/6M9Q3T3p45t4v9BvTz8w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        /* Define Custom Colors & Font Variables (Consistent across all pages) */
+        :root {
+            --color-bg: #121212; 
+            --color-primary: #00FFFF; /* Electric Blue/Cyan */
+            --color-text: #E0E0E0; /* Default text color (old color) */
+            --color-dim: #909090;
+        }
+
+        /* Global Styles & Font */
+        body {
+            background-color: var(--color-bg); 
+            color: var(--color-text);
+            font-family: 'Space Mono', monospace;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Utility Classes for Glow */
+        .text-neon { color: var(--color-primary); }
+        .shadow-neon-sm { box-shadow: 0 0 5px rgba(0, 255, 255, 0.4); }
+        .border-neon { border-color: var(--color-primary); }
+        
+        /* --- BACKGROUND VIDEO STYLES (Infrastructure from skills.html) --- */
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; 
+            overflow: hidden;
+        }
+        #video-background video {
+            min-width: 100%; 
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            filter: brightness(0.5); 
+        }
+        
+        /* Dark Overlay (Ensures text contrast is high) */
+        #video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); 
+            z-index: 2; 
+            pointer-events: none;
+        }
+
+        /* --- Title Animation Keyframes (PULSE/GLOW) --- */
+        @keyframes pulse-glow {
+            0% { opacity: 0.9; text-shadow: 0 0 5px var(--color-primary), 0 0 5px rgba(0, 0, 0, 0.9); }
+            50% { opacity: 1; text-shadow: 0 0 15px var(--color-primary), 0 0 15px rgba(0, 0, 0, 0.9); }
+            100% { opacity: 0.9; text-shadow: 0 0 5px var(--color-primary), 0 0 5px rgba(0, 0, 0, 0.9); }
+        }
+
+        .header-glow { 
+            text-shadow: 
+                0 0 10px var(--color-primary), 
+                0 0 5px rgba(0, 0, 0, 0.9), 
+                0 0 10px rgba(0, 0, 0, 0.9);
+            animation: pulse-glow 3s infinite alternate; 
+        }
+
+        /* --- Scanline Effect Keyframes --- */
+        @keyframes scanlines {
+            to { background-position: 0 400px; } 
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5; 
+            pointer-events: none; 
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.05) 50%, 
+                rgba(0, 0, 0, 0.05) 50% 
+            );
+            background-size: 100% 4px; 
+            animation: scanlines 10s linear infinite; 
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            background-color: rgba(18, 18, 18, 0.85);
+            position: sticky;
+            top: 0;
+            z-index: 11; 
+        }
+
+        .navbar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--color-primary);
+            text-decoration: none;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.4);
+        }
+        .nav-links a {
+            color: var(--color-dim);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+            background-color: rgba(0, 255, 255, 0.05);
+        }
+        
+        /* Main Content Container */
+        .main-content {
+            max-width: 700px; 
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: rgba(26, 26, 26, 0.9); 
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
+            position: relative; 
+            z-index: 10; 
+        }
+
+        /* Link Styling */
+        .contact-link-card {
+            background-color: #1f1f1f;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            text-align: center; 
+        }
+        .contact-link-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        /* Neon style for the icon (Maintains the bright color) */
+        .link-icon {
+            color: var(--color-primary);
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        /* Text (link-text) now inherits the default --color-text for the old color effect */
+        .link-text {
+            color: var(--color-text); /* Ensure link text uses the light gray color */
+        }
+
+        /* Text glow on hover */
+        .contact-link-card:hover .link-text {
+            color: var(--color-primary);
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+        
+        .contact-link-card:hover .link-icon {
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+        }
+        
+        /* Grid for Social Links - 2 Columns on Desktop */
+        .social-links-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem; /* Increased gap for visual clarity */
+        }
+        @media (min-width: 768px) {
+            .social-links-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+
+        /* --- MOUSE SPOTLIGHT EFFECT --- */
+        #spotlight {
+            position: fixed;
+            width: 600px; 
+            height: 600px;
+            border-radius: 50%;
+            pointer-events: none; 
+            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.08) 0%, transparent 70%); 
+            z-index: 4; 
+            transform: translate(-50%, -50%); 
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem 1.5rem; }
+            .main-content { margin: 1.5rem; padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 0. Background Video Container -->
+    <div id="video-background">
+        <video autoplay muted loop playsinline>
+            <!-- !!! IMPORTANT: Replace src="" with a direct link to an MP4 or WEBM file. -->
+            <source src="" type="video/mp4"> 
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
+    <!-- 1. Dark Overlay (Ensures text contrast is high) -->
+    <div id="video-overlay"></div>
+
+    <!-- 2. Spotlight follows mouse -->
+    <div id="spotlight"></div>
+
+    <!-- Navigation Bar --><nav class="navbar">
+        <a href="index.html" class="logo">🛡️ oxsh0gunX</a>
+        
+        <div class="nav-links">
+            <a href="about.html">About</a>
+            <a href="skills.html">Projects</a>
+            <a href="certificates.html">Certificates</a>
+            <!-- Highlighted Link -->
+            <a href="contact.html" style="color: var(--color-primary); border-color: var(--color-primary); box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);">Social</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        
+        <h1 id="contact-title" class="text-4xl font-bold mb-4 text-center text-neon header-glow">
+            SOCIAL
+        </h1>
+        
+        <!-- DIRECT LINKS & SOCIALS (Now centered and full width) -->
+        <div class="max-w-xl mx-auto mt-12">
+            
+            <div class="social-links-grid">
+                
+                <!-- X (Twitter) Link -->
+                <a href="https://x.com/oxsh0gunX" target="_blank" class="contact-link-card block p-6 rounded-lg">
+                    <i class="fa-brands fa-x-twitter fa-3x link-icon mb-2"></i>
+                    <p class="link-text text-xl font-bold transition duration-300">@oxsh0gunX_handle</p>
+                </a>
+                
+                <!-- LinkedIn Link -->
+                <a href="https://linkedin.com/in/oxsh0gunX" target="_blank" class="contact-link-card block p-6 rounded-lg">
+                    <i class="fa-brands fa-linkedin-in fa-3x link-icon mb-2"></i>
+                    <p class="link-text text-xl font-bold transition duration-300">LinkedIn</p>
+                </a>
+
+                <!-- Instagram Link -->
+                <a href="https://instagram.com/oxsh0gunX" target="_blank" class="contact-link-card block p-6 rounded-lg">
+                    <i class="fa-brands fa-instagram fa-3x link-icon mb-2"></i>
+                    <p class="link-text text-xl font-bold transition duration-300">@oxsh0gunX_insta</p>
+                </a>
+                
+                <!-- Reddit Link -->
+                <a href="https://reddit.com/user/oxsh0gunX" target="_blank" class="contact-link-card block p-6 rounded-lg">
+                    <i class="fa-brands fa-reddit-alien fa-3x link-icon mb-2"></i>
+                    <p class="link-text text-xl font-bold transition duration-300">/u/oxsh0gunX_user</p>
+                </a>
+
+                <!-- Medium Link -->
+                <a href="https://medium.com/@oxsh0gunX" target="_blank" class="contact-link-card block p-6 rounded-lg">
+                    <i class="fa-brands fa-medium fa-3x link-icon mb-2"></i>
+                    <p class="link-text text-xl font-bold transition duration-300">Medium Blog</p>
+                </a>
+
+                <!-- TryHackMe Link -->
+                <a href="https://tryhackme.com/p/oxsh0gunX" target="_blank" class="contact-link-card block p-6 rounded-lg">
+                    <!-- Using a bullseye/target icon as a strong visual for hacking platforms -->
+                    <i class="fa-solid fa-bullseye fa-3x link-icon mb-2"></i> 
+                    <p class="link-text text-xl font-bold transition duration-300">TryHackMe Profile</p>
+                </a>
+                
+                <!-- GitHub Link (Kept for code integrity) -->
+                <a href="https://github.com/oxsh0gunX" target="_blank" class="contact-link-card block p-6 rounded-lg">
+                    <i class="fa-brands fa-github fa-3x link-icon mb-2"></i>
+                    <p class="link-text text-xl font-bold transition duration-300">GitHub Codebase</p>
+                </a>
+
+            </div>
+            
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Spotlight Effect -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Spotlight Mouse-Follower Logic ---
+            const spotlight = document.getElementById('spotlight');
+            if (spotlight) {
+                document.addEventListener('mousemove', (e) => {
+                    spotlight.style.left = `${e.clientX}px`;
+                    spotlight.style.top = `${e.clientY}px`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>

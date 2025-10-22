@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About oxsh0gunX | Cyber Security Researcher</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Hacker/Monospace Font --><link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Define Custom Colors & Font Variables (Same as index.html) */
+        :root {
+            --color-bg: #121212; 
+            --color-primary: #00FFFF; /* Electric Blue/Cyan */
+            --color-text: #E0E0E0;
+            --color-dim: #909090;
+        }
+
+        /* Global Styles & Font */
+        body {
+            background-color: var(--color-bg); 
+            color: var(--color-text);
+            font-family: 'Space Mono', monospace;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Utility Classes for Glow */
+        .text-neon { color: var(--color-primary); }
+        .shadow-neon-sm { box-shadow: 0 0 5px rgba(0, 255, 255, 0.4); }
+        .border-neon { border-color: var(--color-primary); }
+        
+        /* Title Animation Keyframes */
+        @keyframes pulse-glow {
+            0% { opacity: 0.9; text-shadow: 0 0 5px var(--color-primary), 0 0 5px rgba(0, 0, 0, 0.9); }
+            50% { opacity: 1; text-shadow: 0 0 15px var(--color-primary), 0 0 15px rgba(0, 0, 0, 0.9); }
+            100% { opacity: 0.9; text-shadow: 0 0 5px var(--color-primary), 0 0 5px rgba(0, 0, 0, 0.9); }
+        }
+
+        /* UPDATED: Title styling with pulse animation */
+        .header-glow { 
+            text-shadow: 
+                0 0 10px var(--color-primary), 
+                0 0 5px rgba(0, 0, 0, 0.9), 
+                0 0 10px rgba(0, 0, 0, 0.9);
+            animation: pulse-glow 3s infinite alternate; /* Applied new pulse animation */
+        }
+
+        /* --- SCANLINE EFFECT (Moving Black/White) --- */
+        @keyframes scanlines {
+            to { background-position: 0 400px; } /* Slowly scrolls the lines down */
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5; /* Below content but above spotlight */
+            pointer-events: none; 
+            
+            /* Subtle white/black scanline pattern */
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.05) 50%, /* Subtle white line */
+                rgba(0, 0, 0, 0.05) 50% /* Subtle black line */
+            );
+            background-size: 100% 4px; /* Defines the height of the lines */
+            animation: scanlines 10s linear infinite; /* Slow scrolling animation */
+        }
+
+        /* Navigation Bar (Same as index.html for consistency) */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            background-color: rgba(18, 18, 18, 0.85);
+            position: sticky;
+            top: 0;
+            z-index: 11; /* Ensure it stays above the scanlines */
+        }
+
+        .navbar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--color-primary);
+            text-decoration: none;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.4);
+        }
+        .nav-links a {
+            color: var(--color-dim);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+            background-color: rgba(0, 255, 255, 0.05);
+        }
+        
+        /* Main Content Container */
+        .main-content {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: #1a1a1a; /* Slightly lighter background for the content card */
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
+            position: relative; 
+            z-index: 10; /* Ensure content is above scanlines and spotlight */
+        }
+        .section-header {
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.8em;
+        }
+
+        /* --- MOUSE SPOTLIGHT EFFECT --- */
+        #spotlight {
+            position: fixed;
+            width: 600px; /* Large size */
+            height: 600px;
+            border-radius: 50%;
+            pointer-events: none; 
+            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.08) 0%, transparent 70%); 
+            z-index: 0; /* Furthest back in the interactive layers */
+            transform: translate(-50%, -50%); 
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem 1.5rem; }
+            /* Mobile menu links will need separate handling in a full implementation */
+            .main-content { margin: 1.5rem; padding: 1.5rem; }
+            .section-header { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="spotlight"></div>
+
+    <!-- Navigation Bar --><nav class="navbar">
+        <a href="index.html" class="logo">🛡️ oxsh0gunX</a>
+        
+        <div class="nav-links">
+            <a href="about.html" style="color: var(--color-primary); border-color: var(--color-primary); box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);">About</a>
+            <a href="skills.html">Skills & Projects</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        
+        <h1 class="text-4xl font-bold mb-8 text-center text-neon header-glow">
+            WHO AM I
+        </h1>
+        
+        <!-- IDENTITY & PHILOSOPHY -->
+        <section class="mb-8">
+            <h2 class="section-header text-neon">0x01 IDENTITY & CORE FOCUS</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                My formal identity is **Muhammed Safvan**, but in the digital realm, I operate as **<span class="text-neon font-bold">oxsh0gunX</span>**—a moniker reflecting my drive for enduring power and mastery in **Cyber Security**. This pseudonym, inspired by the discipline of Raiden Shogun, defines my commitment to relentless skill acquisition.
+            </p>
+            <p class="text-lg leading-relaxed mb-4 text-dim">
+                My immediate objective is to excel as a **SOC Analyst**, leveraging my advanced studies to proactively identify and neutralize threats. I continually sharpen my defensive skills through **CTF challenges on TryHackMe**, specializing in understanding system failure points to establish robust security postures.
+            </p>
+            <p class="text-lg leading-relaxed">
+                <span class="text-neon font-bold">SYSTEM MASTERY & AUTOMATION:</span> My environment of choice—**Arch Linux** with the **Hyprland** compositor—is a testament to my dedication to low-level control. This deep expertise, coupled with strong **Bash Scripting** capabilities, allows me to understand, harden, and automate granular security policies far beyond standard distributions, minimizing attack surface area effectively.
+            </p>
+        </section>
+
+        <!-- EDUCATION -->
+        <section class="mb-8">
+            <h2 class="section-header text-neon">0x02 ACADEMIC PATH</h2>
+            <ul class="list-disc list-inside space-y-3 pl-4">
+                <li class="text-lg">
+                    <span class="text-neon font-bold">Master of Computer Applications (MCA)</span>
+                    <span class="block text-sm text-dim">College of Engineering Vadakara (Currently Pursuing)</span>
+                </li>
+                <li class="text-lg">
+                    <span class="text-neon font-bold">Bachelor of Computer Applications (BCA)</span>
+                    <span class="block text-sm text-dim">Calicut University, SNDPYSS College Perithamanna</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- FUTURE AND MISSION -->
+        <section>
+            <h2 class="section-header text-neon">0x03 RESEARCH & VISION</h2>
+            <p class="text-lg leading-relaxed mb-4">
+                My **core mission** is rooted in accessibility: to **teach everything freely** and pursue **learning everything without financial barriers**. I aim to actively contribute to an open ecosystem where knowledge is readily available to all.
+            </p>
+            <ul class="list-disc list-inside space-y-3 pl-4">
+                <li class="text-lg">
+                    <span class="text-neon font-bold">Tool Development:</span> Focused on creating original **web testing** and **security analysis tools**.
+                </li>
+                <li class="text-lg">
+                    <span class="text-neon font-bold">Emerging Fields:</span> Active exploration of the security landscape of **IoT (Internet of Things)** devices.
+                </li>
+                <li class="text-lg">
+                    <span class="text-neon font-bold">AI Integration:</span> Leveraging **Artificial Intelligence** to simplify complex security challenges and enhance my research and tooling workflows.
+                </li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- JavaScript for Mobile Menu Toggle and Spotlight --><script>
+        function toggleMenu() {
+            // Simplified for this page, usually part of a full implementation
+            console.log("Menu toggle functionality goes here.");
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Spotlight Mouse-Follower Logic ---
+            const spotlight = document.getElementById('spotlight');
+
+            document.addEventListener('mousemove', (e) => {
+                // Update the position of the spotlight div to follow the cursor
+                spotlight.style.left = `${e.clientX}px`;
+                spotlight.style.top = `${e.clientY}px`;
+            });
+        });
+    </script>
+</body>
+</html>

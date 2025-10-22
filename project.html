@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | oxsh0gunX</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Hacker/Monospace Font --><link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Define Custom Colors & Font Variables (Same as index.html) */
+        :root {
+            --color-bg: #121212; 
+            --color-primary: #00FFFF; /* Electric Blue/Cyan */
+            --color-text: #E0E0E0;
+            --color-dim: #909090;
+        }
+
+        /* Global Styles & Font */
+        body {
+            background-color: var(--color-bg); 
+            color: var(--color-text);
+            font-family: 'Space Mono', monospace;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Utility Classes for Glow */
+        .text-neon { color: var(--color-primary); }
+        .shadow-neon-sm { box-shadow: 0 0 5px rgba(0, 255, 255, 0.4); }
+        .border-neon { border-color: var(--color-primary); }
+        
+        /* --- BACKGROUND VIDEO STYLES --- */
+        #video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Below the content */
+            overflow: hidden;
+        }
+        #video-background video {
+            min-width: 100%; 
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Make the video darker so the neon text pops out */
+            filter: brightness(0.5); 
+        }
+        
+        /* Dark Overlay (Ensures text contrast is high) */
+        #video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Semi-transparent black layer */
+            background-color: rgba(0, 0, 0, 0.7); 
+            z-index: 2; 
+            pointer-events: none;
+        }
+
+        /* --- Title Animation Keyframes (PULSE/GLOW) --- */
+        @keyframes pulse-glow {
+            0% { opacity: 0.9; text-shadow: 0 0 5px var(--color-primary), 0 0 5px rgba(0, 0, 0, 0.9); }
+            50% { opacity: 1; text-shadow: 0 0 15px var(--color-primary), 0 0 15px rgba(0, 0, 0, 0.9); }
+            100% { opacity: 0.9; text-shadow: 0 0 5px var(--color-primary), 0 0 5px rgba(0, 0, 0, 0.9); }
+        }
+
+        .header-glow { 
+            /* Base shadow for contrast */
+            text-shadow: 
+                0 0 10px var(--color-primary), 
+                0 0 5px rgba(0, 0, 0, 0.9), 
+                0 0 10px rgba(0, 0, 0, 0.9);
+            /* Adds the secondary pulsing effect */
+            animation: pulse-glow 3s infinite alternate; 
+        }
+
+        /* --- Scanline Effect Keyframes --- */
+        @keyframes scanlines {
+            to { background-position: 0 400px; } 
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5; /* Above video and overlay */
+            pointer-events: none; 
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.05) 50%, 
+                rgba(0, 0, 0, 0.05) 50% 
+            );
+            background-size: 100% 4px; 
+            animation: scanlines 10s linear infinite; 
+        }
+
+        /* Navigation Bar (Same as index.html for consistency) */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+            background-color: rgba(18, 18, 18, 0.85);
+            position: sticky;
+            top: 0;
+            z-index: 11; 
+        }
+
+        .navbar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--color-primary);
+            text-decoration: none;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.4);
+        }
+        .nav-links a {
+            color: var(--color-dim);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+            background-color: rgba(0, 255, 255, 0.05);
+        }
+        
+        /* Main Content Container */
+        .main-content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 2rem;
+            /* Lower opacity background to allow video to show through slightly */
+            background-color: rgba(26, 26, 26, 0.9); 
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
+            position: relative; 
+            z-index: 10; 
+        }
+
+        /* Project Card Styling */
+        .project-card {
+            background-color: #1f1f1f;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 1.5rem; 
+            transition: all 0.3s ease;
+        }
+        .project-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+            transform: translateY(-3px);
+            background-color: #242424;
+        }
+
+        /* --- MOUSE SPOTLIGHT EFFECT --- */
+        #spotlight {
+            position: fixed;
+            width: 600px; 
+            height: 600px;
+            border-radius: 50%;
+            pointer-events: none; 
+            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.08) 0%, transparent 70%); 
+            z-index: 4; /* Below scanlines, above video */
+            transform: translate(-50%, -50%); 
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem 1.5rem; }
+            .main-content { margin: 1.5rem; padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- 0. Background Video Container (Add direct MP4 link here later) -->
+    <div id="video-background">
+        <video autoplay muted loop playsinline>
+            <!-- !!! IMPORTANT: Replace src="" with a direct link to an MP4 or WEBM file. -->
+            <source src="" type="video/mp4"> 
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
+    <!-- 1. Dark Overlay (Ensures text contrast is high) -->
+    <div id="video-overlay"></div>
+
+    <!-- 2. Spotlight follows mouse -->
+    <div id="spotlight"></div>
+
+    <!-- Navigation Bar --><nav class="navbar">
+        <a href="index.html" class="logo">🛡️ oxsh0gunX</a>
+        
+        <div class="nav-links">
+            <a href="about.html">About</a>
+            <!-- Highlighted Link -->
+            <a href="skills.html" style="color: var(--color-primary); border-color: var(--color-primary); box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);">Projects</a>
+            <a href="certificates.html">Certificates</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        
+        <!-- The main title element needs an ID to be targeted by JavaScript -->
+        <h1 id="project-title" class="text-4xl font-bold mb-12 text-center text-neon header-glow">
+            PROJECT DEPLOYMENTS
+        </h1>
+        
+        <!-- PROJECTS / DEPLOYMENTS SECTION -->
+        <section>
+            <!-- 3-Column Grid for Image-Based Projects -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> 
+                
+                <!-- Project 1: Hyprland Hardening -->
+                <div class="project-card flex flex-col h-full">
+                    <!-- Placeholder Image (Replace with project screenshot/logo) -->
+                    <img src="https://placehold.co/400x200/222/00FFFF?text=DOTFILES+IMAGE" alt="Project 1 Image" class="w-full h-32 object-cover rounded-md mb-4 border border-neon shadow-neon-sm">
+                    <h3 class="text-xl font-bold text-neon mb-1">Hyprland Hardening Suite</h3>
+                    <p class="text-sm text-dim mb-3 flex-grow">
+                        Custom Arch Linux dotfiles with Bash automation for system security checks and minimal environment hardening.
+                    </p>
+                    <a href="#" class="text-sm inline-block text-neon font-bold hover:underline self-start">VIEW CODE</a>
+                </div>
+
+                <!-- Project 2: Web Testing Tool -->
+                <div class="project-card flex flex-col h-full">
+                    <!-- Placeholder Image (Replace with project screenshot/logo) -->
+                    <img src="https://placehold.co/400x200/222/00FFFF?text=PYTHON+TOOL+IMAGE" alt="Project 2 Image" class="w-full h-32 object-cover rounded-md mb-4 border border-neon shadow-neon-sm">
+                    <h3 class="text-xl font-bold text-neon mb-1">Web Recon Utility</h3>
+                    <p class="text-sm text-dim mb-3 flex-grow">
+                        Lightweight **Python tool** for automated web application reconnaissance and basic vulnerability pattern testing.
+                    </p>
+                    <a href="#" class="text-sm inline-block text-neon font-bold hover:underline self-start">VIEW DETAILS</a>
+                </div>
+                
+                <!-- Project 3: CTF Write-ups -->
+                <div class="project-card flex flex-col h-full">
+                    <!-- Placeholder Image (Replace with project screenshot/logo) -->
+                    <img src="https://placehold.co/400x200/222/00FFFF?text=CTF+REPORTS+IMAGE" alt="Project 3 Image" class="w-full h-32 object-cover rounded-md mb-4 border border-neon shadow-neon-sm">
+                    <h3 class="text-xl font-bold text-neon mb-1">CTF Debrief Collection</h3>
+                    <p class="text-sm text-dim mb-3 flex-grow">
+                        Documented methodologies for challenging **TryHackMe CTF** rooms, focused on exploitation and defense strategies.
+                    </p>
+                    <a href="#" class="text-sm inline-block text-neon font-bold hover:underline self-start">READ REPORTS</a>
+                </div>
+
+                <!-- Project 4: AI Problem Solver (Future Project) -->
+                <div class="project-card flex flex-col h-full">
+                    <!-- Placeholder Image (Replace with project screenshot/logo) -->
+                    <img src="https://placehold.co/400x200/222/00FFFF?text=AI+RESEARCH+IMAGE" alt="Project 4 Image" class="w-full h-32 object-cover rounded-md mb-4 border border-neon shadow-neon-sm">
+                    <h3 class="text-xl font-bold text-neon mb-1">AI Problem Solver Research</h3>
+                    <p class="text-sm text-dim mb-3 flex-grow">
+                        Exploration and prototyping of AI/ML integration to automate common IT troubleshooting and maintenance tasks.
+                    </p>
+                    <a href="#" class="text-sm inline-block text-neon font-bold hover:underline self-start">VIEW RESEARCH</a>
+                </div>
+                
+                <!-- Project 5: IoT Audit (Future Project) -->
+                <div class="project-card flex flex-col h-full">
+                    <!-- Placeholder Image (Replace with project screenshot/logo) -->
+                    <img src="https://placehold.co/400x200/222/00FFFF?text=IOT+AUDIT+IMAGE" alt="Project 5 Image" class="w-full h-32 object-cover rounded-md mb-4 border border-neon shadow-neon-sm">
+                    <h3 class="text-xl font-bold text-neon mb-1">IoT Security Audit</h3>
+                    <p class="text-sm text-dim mb-3 flex-grow">
+                        Security audit and hardening guides for common home IoT devices, focusing on network isolation and firmware risks.
+                    </p>
+                    <a href="#" class="text-sm inline-block text-neon font-bold hover:underline self-start">VIEW AUDIT</a>
+                </div>
+                
+                <!-- Project 6: Free Education Initiative (Mission Project) -->
+                <div class="project-card flex flex-col h-full">
+                    <!-- Placeholder Image (Replace with project screenshot/logo) -->
+                    <img src="https://placehold.co/400x200/222/00FFFF?text=EDUCATION+IMAGE" alt="Project 6 Image" class="w-full h-32 object-cover rounded-md mb-4 border border-neon shadow-neon-sm">
+                    <h3 class="text-xl font-bold text-neon mb-1">Free Education Platform</h3>
+                    <p class="text-sm text-dim mb-3 flex-grow">
+                        Community project focused on curating and sharing free, high-quality cyber security and Linux learning resources.
+                    </p>
+                    <a href="#" class="text-sm inline-block text-neon font-bold hover:underline self-start">ACCESS RESOURCES</a>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JavaScript for Mobile Menu Toggle and Spotlight --><script>
+        function toggleMenu() {
+            // Simplified for this page, usually part of a full implementation
+            console.log("Menu toggle functionality goes here.");
+        }
+        
+        // --- Core Logic for the Sweeping Color Wave on the Title ---
+        function animateTitleColor() {
+            const titleElement = document.getElementById('project-title');
+            const text = titleElement.textContent;
+            
+            // Step 1: Wrap every character in a span for individual control
+            if (!titleElement.querySelector('.rainbow-char')) {
+                let wrappedHtml = '';
+                for (let i = 0; i < text.length; i++) {
+                    const char = text[i];
+                    wrappedHtml += `<span class="rainbow-char" style="display: inline-block;">${char === ' ' ? '&nbsp;' : char}</span>`;
+                }
+                titleElement.innerHTML = wrappedHtml;
+            }
+            
+            // Define the sequence of neon colors for the transition
+            const neonPalette = [
+                '#00FFFF', // Cyan (Default)
+                '#00FF41', // Neon Green
+                '#FF00FF', // Magenta
+                '#FFD700'  // Gold/Yellow
+            ];
+            
+            let frameCounter = 0;
+            const chars = titleElement.querySelectorAll('.rainbow-char');
+            
+            // Step 2: The animation loop using requestAnimationFrame for smoothness
+            function updateTitleColors() {
+                // Control the speed of the sweep (0.08 is now a very slow, smooth speed)
+                frameCounter += 0.08; 
+                
+                chars.forEach((char, index) => {
+                    // Step 3: Calculate the color index for each letter
+                    const offsetIndex = Math.floor(frameCounter + index / 2) % neonPalette.length;
+                    const color = neonPalette[offsetIndex];
+                    
+                    char.style.color = color; 
+                    char.style.textShadow = `0 0 10px ${color}80, 0 0 5px #FFFFFF30`; 
+                });
+
+                requestAnimationFrame(updateTitleColors);
+            }
+            
+            // Start the infinite animation loop
+            updateTitleColors();
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Spotlight Mouse-Follower Logic ---
+            const spotlight = document.getElementById('spotlight');
+
+            document.addEventListener('mousemove', (e) => {
+                // Update the position of the spotlight div to follow the cursor
+                spotlight.style.left = `${e.clientX}px`;
+                spotlight.style.top = `${e.clientY}px`;
+            });
+            
+            // Start the sweeping color animation
+            animateTitleColor();
+        });
+    </script>
+</body>
+</html>

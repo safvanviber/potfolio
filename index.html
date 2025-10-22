@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>oxsh0gunX | Cyber Security Portfolio</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Hacker/Monospace Font --><link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Define Custom Colors & Font Variables */
+        :root {
+            --color-bg: #121212; /* Deep Black/Dark Grey for background */
+            --color-primary: #00FFFF; /* Electric Blue/Cyan for general accents */
+            --color-text: #E0E0E0;
+            --color-dim: #909090;
+        }
+
+        /* Global Styles & Font */
+        body {
+            /* Now uses the solid background color */
+            background-color: var(--color-bg); 
+            color: var(--color-text);
+            font-family: 'Space Mono', monospace;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* --- BACKGROUND LAYERS --- */
+        /* Mascot CSS removed */
+
+        /* Wrapper to keep main content above the backgrounds */
+        .content-wrapper {
+            position: relative;
+            z-index: 1; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: transparent; 
+        }
+        
+        /* Utility Classes for Glow */
+        .text-neon { color: var(--color-primary); }
+        .shadow-neon { box-shadow: 0 0 15px rgba(0, 255, 65, 0.5); }
+        .border-neon { border-color: var(--color-primary); }
+
+        /* Navigation Bar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.3); /* Blue border */
+            background-color: rgba(18, 18, 18, 0.85); /* Slightly darker background */
+        }
+
+        .navbar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--color-primary);
+            text-decoration: none;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.4);
+            transition: all 0.2s;
+        }
+        .navbar .logo:hover {
+            color: white;
+        }
+
+        /* --- ENHANCED NAVIGATION LINKS --- */
+        .nav-links a {
+            color: var(--color-dim);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            padding: 0.5rem 1rem; /* Added padding for button look */
+            border: 1px solid transparent; /* Default transparent border */
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s ease; /* Smooth transition */
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+            border-color: var(--color-primary); /* Neon border on hover */
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); /* Stronger neon glow */
+            background-color: rgba(0, 255, 255, 0.05); /* Very light cyan fill on hover */
+        }
+        
+        /* Mobile Navigation Toggle */
+        .menu-toggle { display: none; }
+        @media (max-width: 768px) {
+            .navbar { padding: 1rem 1.5rem; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: #1a1a1a;
+                border-bottom: 1px solid rgba(0, 255, 255, 0.3); /* Blue border */
+                z-index: 10;
+                padding: 1rem 0;
+            }
+            .nav-links.active { display: flex; }
+            /* Adjust mobile link padding/margin */
+            .nav-links a {
+                margin: 0.5rem 1.5rem;
+                padding: 0.75rem 1.5rem; /* Larger touch target */
+                border-bottom: none;
+                text-align: center;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .menu-toggle {
+                display: block;
+                cursor: pointer;
+                font-size: 1.5rem;
+                color: var(--color-primary);
+            }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            /* Add some depth/box-shadow to the text itself for better visibility */
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+            position: relative; 
+        }
+
+        .hacker-name {
+            font-size: 4.5em;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 0.2em;
+            text-transform: uppercase;
+        }
+        /* Style for the individual letters of the animated name */
+        .hacker-name .rainbow-char {
+            display: inline-block;
+            transition: none;
+        }
+        @media (max-width: 640px) {
+             .hacker-name { font-size: 2.5em; }
+        }
+
+
+        /* Typing Effect Styling */
+        .hacker-text-container {
+            font-size: 1.5em;
+            min-height: 2em; /* Prevents layout shift */
+            color: var(--color-text);
+            margin-bottom: 1rem;
+        }
+
+        /* Blinking Cursor Animation */
+        .cursor {
+            display: inline-block;
+            color: var(--color-primary);
+            margin-left: 2px;
+            animation: blink 0.7s infinite step-end;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Updated Intro Text for Professional Role */
+        .intro-text {
+            font-size: 1.2em;
+            color: var(--color-primary); /* CHANGED: Now uses the primary cyan color */
+            margin-bottom: 2.5rem;
+        }
+        @media (max-width: 640px) {
+             .intro-text { font-size: 1em; }
+             .hacker-text-container { font-size: 1.1em; }
+        }
+
+        /* --- MOUSE SPOTLIGHT EFFECT --- */
+        #spotlight {
+            position: fixed;
+            width: 600px; /* Large size */
+            height: 600px;
+            border-radius: 50%;
+            pointer-events: none; /* Allows clicks and interactions through the spotlight */
+            /* Radial gradient: now white for contrast with potential video colors */
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+            z-index: 0; /* Placed above content */
+            transform: translate(-50%, -50%); /* Centers the spotlight on the mouse cursor position */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- MOUSE SPOTLIGHT EFFECT --><div id="spotlight"></div>
+
+    <!-- Content Wrapper (holds Nav and Hero) --><div class="content-wrapper">
+        
+        <!-- Navigation Bar --><nav class="navbar">
+            <a href="index.html" class="logo">🛡️ oxsh0gunX</a>
+            
+            <div class="nav-links" id="nav-links">
+                <!-- These links are placeholders until you create the other files --><a href="about.html">About</a>
+                <a href="skills.html">Skills & Projects</a>
+                <a href="certificates.html">Certificates</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="menu-toggle" onclick="toggleMenu()" aria-label="Toggle navigation menu">☰</div>
+        </nav>
+
+        <!-- Main Hero Section --><header class="hero-section">
+            <!-- Used Tailwind classes for max-width, center-aligning, and stacking content -->
+            <div class="max-w-4xl mx-auto flex flex-col items-center">
+                <!-- H1 content changed and is now controlled by JS for color animation --><h1 class="hacker-name">oxsh0gunX</h1>
+                
+                <!-- Evernight Dance Tagline REMOVED -->
+                
+                <!-- Typing Effect Container --><p class="hacker-text-container">
+                    <span id="typing-text"></span><span class="cursor">_</span>
+                </p>
+
+                <!-- Updated Intro Text to reflect professional role --><p class="intro-text">
+                    Cyber Security Researcher | MCA Student
+                </p>
+
+                <!-- Video Placeholder REMOVED -->
+
+            </div>
+            
+        </header>
+
+    </div>
+
+    <!-- JavaScript for Dynamic Typing Effect, Mobile Menu --><script>
+        // --- Mobile Menu Toggle Logic ---
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Name Color Animation Logic (Slow, Subtle Strobe Wave) ---
+            function animateNameColor() {
+                const nameElement = document.querySelector('.hacker-name');
+                const text = nameElement.textContent;
+                
+                // 1. Wrap each character in a span for individual color control (only do this once)
+                if (!nameElement.querySelector('.rainbow-char')) {
+                    let wrappedHtml = '';
+                    for (let i = 0; i < text.length; i++) {
+                        // Preserve space if character is a space
+                        if (text[i] === ' ') {
+                            wrappedHtml += ' ';
+                        } else {
+                             wrappedHtml += `<span class="rainbow-char">${text[i]}</span>`;
+                        }
+                    }
+                    nameElement.innerHTML = wrappedHtml;
+                }
+                
+                // Professional, high-contrast palette
+                const cyberpunkColors = [
+                    '#00FFFF', // Cyan
+                    '#FF00FF', // Magenta
+                    '#FFD700', // Gold/Yellow
+                    '#00FF41'  // Neon Green
+                ];
+                let frameCounter = 0;
+                
+                function updateColors() {
+                    // Set speed to 0.2 for a very slow, subtle, professional wave effect.
+                    frameCounter += 0.2;
+                    
+                    const chars = nameElement.querySelectorAll('.rainbow-char');
+                    
+                    chars.forEach((char, index) => {
+                        // The color index is calculated based on the global frame counter
+                        const offsetIndex = Math.floor(frameCounter + index) % cyberpunkColors.length;
+                        const color = cyberpunkColors[offsetIndex];
+                        
+                        char.style.color = color; 
+                        // Apply a strong but professional text shadow
+                        char.style.textShadow = `0 0 8px ${color}50, 0 0 4px #FFFFFF30`; 
+                    });
+
+                    // Use requestAnimationFrame for smooth, non-blocking animation
+                    requestAnimationFrame(updateColors);
+                }
+                
+                updateColors();
+            }
+
+            // --- Typing Effect Logic ---
+            // Professional, technical phrases related to Hyprland and Security
+            const phrases = [
+                "INIT: Custom Hyprland Configuration Loaded...",
+                "hyprctl reload", // Hyprland command
+                "neofetch not found", // Humorous Linux error
+                "Analyzing Modern Threat Landscapes in Wayland",
+                "Compiling System Stability and Zero-Day Patches."
+            ];
+            
+            const typingElement = document.getElementById('typing-text');
+            let phraseIndex = 0;
+            let charIndex = 0;
+            
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            async function type() {
+                if (charIndex < phrases[phraseIndex].length) {
+                    typingElement.textContent += phrases[phraseIndex].charAt(charIndex);
+                    charIndex++;
+                    await sleep(70); 
+                    type();
+                } else {
+                    await sleep(2000); 
+                    erase();
+                }
+            }
+
+            async function erase() {
+                if (charIndex > 0) {
+                    typingElement.textContent = phrases[phraseIndex].substring(0, charIndex - 1);
+                    charIndex--;
+                    await sleep(40); 
+                    erase();
+                } else {
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    await sleep(500); 
+                    type();
+                }
+            }
+
+            // Start animations
+            animateNameColor();
+            type();
+
+            
+            // --- Spotlight Mouse-Follower Logic ---
+            const spotlight = document.getElementById('spotlight');
+
+            document.addEventListener('mousemove', (e) => {
+                // Update the position of the spotlight div to follow the cursor
+                // Note: The CSS transform: translate(-50%, -50%) centers the element
+                spotlight.style.left = `${e.clientX}px`;
+                spotlight.style.top = `${e.clientY}px`;
+            });
+        });
+    </script>
+</body>
+</html>
